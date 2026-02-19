@@ -1,91 +1,314 @@
-import React from "react";
-import Section from "./SectionWrapper";
-import Link from "next/link";
+"use client";
+
+import React, { useEffect, useRef } from "react";
 
 const Hero = () => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        const resize = () => {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        };
+        resize();
+        window.addEventListener("resize", resize);
+
+        // Particle system
+        const particles: Array<{
+            x: number; y: number; size: number;
+            speedX: number; speedY: number; opacity: number;
+        }> = [];
+
+        for (let i = 0; i < 80; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2 + 0.5,
+                speedX: (Math.random() - 0.5) * 0.3,
+                speedY: (Math.random() - 0.5) * 0.3,
+                opacity: Math.random() * 0.5 + 0.1,
+            });
+        }
+
+        let animId: number;
+        const animate = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p) => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(194, 164, 255, ${p.opacity})`;
+                ctx.fill();
+            });
+            animId = requestAnimationFrame(animate);
+        };
+        animate();
+
+        return () => {
+            cancelAnimationFrame(animId);
+            window.removeEventListener("resize", resize);
+        };
+    }, []);
+
     return (
-        <Section id="hero" className="min-h-screen flex items-center pt-20">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-                {/* Left: Typography */}
-                <div className="space-y-8 relative z-10">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-accent-teal">
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
-                        </span>
-                        Available for new projects
-                    </div>
+        <section
+            id="hero"
+            style={{
+                position: "relative",
+                minHeight: "100vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+            }}
+        >
+            {/* Particle canvas */}
+            <canvas
+                ref={canvasRef}
+                style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    pointerEvents: "none",
+                    zIndex: 0,
+                }}
+            />
 
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]">
-                        Constructing <br />
-                        <span className="text-gradient-accent">Scalable Systems.</span>
-                    </h1>
+            {/* Centered purple glow orb */}
+            <div
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "600px",
+                    height: "600px",
+                    borderRadius: "50%",
+                    background: "radial-gradient(circle, rgba(168, 124, 255, 0.15) 0%, rgba(194, 164, 255, 0.05) 40%, transparent 70%)",
+                    pointerEvents: "none",
+                    zIndex: 0,
+                    animation: "pulse-glow 4s ease-in-out infinite",
+                }}
+            />
 
-                    <p className="text-lg md:text-xl text-zinc-400 max-w-lg leading-relaxed">
-                        I’m <strong>Renesh Naidu Para</strong>. A Senior Backend Engineer architecting high-performance infrastructure and observability stacks for global scale.
-                    </p>
+            {/* Content */}
+            <div
+                className="section-container"
+                style={{
+                    position: "relative",
+                    zIndex: 1,
+                    textAlign: "center",
+                    paddingTop: "80px",
+                }}
+            >
+                {/* Small greeting */}
+                <p
+                    style={{
+                        fontSize: "14px",
+                        letterSpacing: "3px",
+                        color: "var(--accent)",
+                        textTransform: "uppercase",
+                        marginBottom: "24px",
+                        opacity: 0,
+                        animation: "fadeInUp 0.7s ease 0.2s forwards",
+                        fontWeight: 500,
+                    }}
+                >
+                    Hello! I&apos;m
+                </p>
 
-                    <div className="flex flex-wrap gap-4 pt-2">
-                        <Link
-                            href="#work"
-                            className="px-8 py-4 rounded-full bg-white text-black font-semibold hover:scale-105 transition-transform shadow-[0_0_20px_-5px_rgba(255,255,255,0.3)]"
-                        >
-                            Selected Work
-                        </Link>
-                        <Link
-                            href="#contact"
-                            className="px-8 py-4 rounded-full border border-white/10 hover:bg-white/5 transition-colors text-white font-medium"
-                        >
-                            Contact Me
-                        </Link>
-                    </div>
+                {/* Large Name */}
+                <h1
+                    style={{
+                        fontSize: "clamp(56px, 10vw, 120px)",
+                        fontWeight: 800,
+                        lineHeight: 1,
+                        letterSpacing: "-2px",
+                        color: "var(--text)",
+                        marginBottom: "8px",
+                        opacity: 0,
+                        animation: "fadeInUp 0.7s ease 0.4s forwards",
+                        textTransform: "uppercase",
+                    }}
+                >
+                    RENESH
+                </h1>
+                <h1
+                    style={{
+                        fontSize: "clamp(56px, 10vw, 120px)",
+                        fontWeight: 800,
+                        lineHeight: 1,
+                        letterSpacing: "-2px",
+                        color: "var(--text)",
+                        marginBottom: "40px",
+                        opacity: 0,
+                        animation: "fadeInUp 0.7s ease 0.5s forwards",
+                        textTransform: "uppercase",
+                    }}
+                >
+                    NAIDU PARA
+                </h1>
+
+                {/* Role line */}
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "16px",
+                        marginBottom: "60px",
+                        opacity: 0,
+                        animation: "fadeInUp 0.7s ease 0.7s forwards",
+                    }}
+                >
+                    <span style={{ fontSize: "14px", color: "var(--text-muted)", letterSpacing: "2px" }}>A</span>
+                    <div
+                        style={{
+                            height: "1px",
+                            width: "40px",
+                            background: "var(--border)",
+                        }}
+                    />
+                    <span
+                        style={{
+                            fontSize: "clamp(18px, 3vw, 28px)",
+                            fontWeight: 700,
+                            letterSpacing: "4px",
+                            textTransform: "uppercase",
+                            color: "var(--text)",
+                        }}
+                    >
+                        SYSTEMS ENGINEER
+                    </span>
+                    <div
+                        style={{
+                            height: "1px",
+                            width: "40px",
+                            background: "var(--border)",
+                        }}
+                    />
+                    <span
+                        style={{
+                            fontSize: "clamp(18px, 3vw, 28px)",
+                            fontWeight: 700,
+                            letterSpacing: "4px",
+                            textTransform: "uppercase",
+                            color: "var(--accent)",
+                        }}
+                    >
+                        C++ DEVELOPER
+                    </span>
                 </div>
 
-                {/* Right: Abstract Systems Map Visual */}
-                <div className="relative h-[400px] w-full hidden lg:block perspective-[1000px]">
-                    {/* Main Container Card */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent rounded-3xl border border-white/5 backdrop-blur-sm p-8 transform rotate-y-[-12deg] rotate-x-[5deg] hover:rotate-0 transition-all duration-700 ease-out shadow-2xl">
+                {/* CTA Buttons */}
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "16px",
+                        flexWrap: "wrap",
+                        opacity: 0,
+                        animation: "fadeInUp 0.7s ease 0.9s forwards",
+                    }}
+                >
+                    <a
+                        href="#work"
+                        style={{
+                            padding: "14px 40px",
+                            borderRadius: "6px",
+                            background: "rgba(194, 164, 255, 0.15)",
+                            border: "1px solid rgba(194, 164, 255, 0.3)",
+                            color: "var(--text)",
+                            fontSize: "14px",
+                            fontWeight: 600,
+                            letterSpacing: "1px",
+                            transition: "all 0.3s ease",
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "rgba(194, 164, 255, 0.25)";
+                            e.currentTarget.style.borderColor = "var(--accent)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "rgba(194, 164, 255, 0.15)";
+                            e.currentTarget.style.borderColor = "rgba(194, 164, 255, 0.3)";
+                        }}
+                    >
+                        Explore Work →
+                    </a>
+                    <a
+                        href="#contact"
+                        style={{
+                            padding: "14px 40px",
+                            borderRadius: "6px",
+                            background: "var(--accent)",
+                            border: "1px solid var(--accent)",
+                            color: "#0b080c",
+                            fontSize: "14px",
+                            fontWeight: 700,
+                            letterSpacing: "1px",
+                            transition: "all 0.3s ease",
+                            cursor: "pointer",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "var(--accent-dark)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "var(--accent)";
+                        }}
+                    >
+                        Hire Me →
+                    </a>
+                </div>
 
-                        {/* Grid Lines */}
-                        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] rounded-3xl" />
-
-                        {/* Nodes */}
-                        <div className="relative h-full w-full">
-                            {/* Center Node: Core */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-black/50 border border-accent-blue/30 rounded-full flex items-center justify-center shadow-[0_0_30px_-5px_rgba(59,130,246,0.2)] animate-pulse-slow">
-                                <div className="text-center">
-                                    <div className="text-xs text-accent-blue font-mono">CORE</div>
-                                    <div className="text-white font-bold">C++</div>
-                                </div>
-                            </div>
-
-                            {/* Orbiting Node 1: K8s */}
-                            <div className="absolute top-10 left-10 p-4 rounded-xl bg-black/40 border border-white/10 backdrop-blur-md animate-[float_6s_ease-in-out_infinite]">
-                                <div className="h-2 w-2 rounded-full bg-accent-violet mb-2" />
-                                <div className="text-xs text-zinc-400 font-mono">Orchestration</div>
-                                <div className="font-bold text-sm">Kubernetes</div>
-                            </div>
-
-                            {/* Orbiting Node 2: Data */}
-                            <div className="absolute bottom-12 right-8 p-4 rounded-xl bg-black/40 border border-white/10 backdrop-blur-md animate-[float_7s_ease-in-out_infinite_1s]">
-                                <div className="h-2 w-2 rounded-full bg-accent-teal mb-2" />
-                                <div className="text-xs text-zinc-400 font-mono">Observe</div>
-                                <div className="font-bold text-sm">Elastic Stack</div>
-                            </div>
-
-                            {/* Connection Lines (Simulated purely visual) */}
-                            <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
-                                <line x1="50%" y1="50%" x2="20%" y2="20%" stroke="white" strokeDasharray="4 4" />
-                                <line x1="50%" y1="50%" x2="80%" y2="80%" stroke="white" strokeDasharray="4 4" />
-                            </svg>
-                        </div>
-                    </div>
-
-                    {/* Background Glow */}
-                    <div className="absolute inset-0 bg-accent-blue/20 blur-[100px] -z-10 rounded-full" />
+                {/* Scroll indicator */}
+                <div
+                    style={{
+                        position: "absolute",
+                        bottom: "-80px",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: "8px",
+                        opacity: 0,
+                        animation: "fadeInUp 0.7s ease 1.2s forwards",
+                    }}
+                >
+                    <span style={{ fontSize: "10px", letterSpacing: "3px", color: "var(--text-muted)" }}>SCROLL</span>
+                    <div
+                        style={{
+                            width: "1px",
+                            height: "50px",
+                            background: "linear-gradient(to bottom, var(--accent), transparent)",
+                        }}
+                    />
                 </div>
             </div>
-        </Section>
+
+            <style>{`
+                @keyframes pulse-glow {
+                    0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+                    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+                }
+            `}</style>
+        </section>
     );
 };
 

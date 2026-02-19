@@ -1,0 +1,57 @@
+RENESH NAIDU PARA
+Senior Software Engineer
+Email: Reneshnaidu.para@gmail.com
+LinkedIn: linkedin.com/in/reneshnaidu
+GitHub: github.com/reneshnaidu
+
+SUMMARY
+Senior Software Engineer with 6+ years of experience in C++, Linux systems, embedded development, and cloud infrastructure. Specialized in building high-performance, scalable systems with expertise in Kubernetes, OpenShift, and observability solutions.
+
+TECHNICAL SKILLS
+Languages: C, C++17, Python, Assembly, Bash
+Systems: Linux, POSIX, TCP/IP, Socket Programming, GDB
+Cloud & DevOps: Kubernetes, OpenShift, Docker, Helm, Jenkins
+Observability: Elasticsearch, Fluentd, Kibana, Filebeat, Prometheus
+Embedded: Device Drivers, I2C/SPI, ARM Architecture, MIPI CSI
+
+PROFESSIONAL EXPERIENCE
+
+Senior Software Engineer | IBM Labs Bangalore
+Jan 2024 - Present
+• Core C++ component development for CICS TX enterprise transaction processing
+• Deployed full EFK stack on OpenShift/K8s via Helm Charts & Operators
+• Integrated Filebeat sidecars for efficient log forwarding
+• Managed Persistent Volume Claims for high-availability data storage
+
+Senior Software Engineer | OpenText Bangalore
+Dec 2021 - Dec 2023
+• Developed embedded C/C++ data collector for real-time system metrics
+• Integrated with OBM & Performance Dashboard for end-to-end visibility
+• Diagnosed complex performance issues on live production systems
+• Aggregated heterogeneous data into unified management view
+
+Software Engineer | Eximius Design
+Oct 2020 - Nov 2021
+• Device driver development for automotive camera modules
+• Developed drivers for AR0820, MAX9295A, and serializer modules
+• Collaborated on Surround Recognition & Driver Monitoring Systems
+• Optimized I2C communication for sensor modules
+
+Software Developer | Matrix Comsec
+Dec 2018 - Jan 2020
+• Embedded Linux development for biometric access control systems
+• Implemented secure TCP/IP socket communication protocols
+• Optimized event storage scaling to 500,000 records
+• Enhanced UI responsiveness on 128×64 Dot Matrix Displays
+
+EDUCATION
+Bachelor of Technology in Computer Science
+[Your University Name]
+[Graduation Year]
+
+CERTIFICATIONS
+• Kubernetes Administrator (CKA)
+• AWS Certified Solutions Architect
+• Linux Foundation Certified Engineer
+
+Note: This is a placeholder resume. Please replace with your actual resume PDF.
