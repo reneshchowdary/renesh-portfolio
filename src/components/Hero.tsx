@@ -71,8 +71,23 @@ const Hero = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 overflow: "hidden",
+                background: "radial-gradient(ellipse at top, rgba(168, 124, 255, 0.15) 0%, transparent 50%), radial-gradient(ellipse at bottom, rgba(194, 164, 255, 0.1) 0%, transparent 50%)",
             }}
         >
+            {/* Animated gradient mesh background */}
+            <div
+                style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: `
+                        radial-gradient(circle at 20% 50%, rgba(194, 164, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(168, 124, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(194, 164, 255, 0.08) 0%, transparent 50%)
+                    `,
+                    animation: "mesh-move 20s ease-in-out infinite",
+                    pointerEvents: "none",
+                }}
+            />
             {/* Particle canvas */}
             <canvas
                 ref={canvasRef}
@@ -113,6 +128,94 @@ const Hero = () => {
                     paddingTop: "80px",
                 }}
             >
+                {/* Profile Picture with Animated Border */}
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginBottom: "40px",
+                        opacity: 0,
+                        animation: "fadeInUp 0.7s ease 0.1s forwards",
+                    }}
+                >
+                    <div
+                        style={{
+                            position: "relative",
+                            width: "280px",
+                            height: "280px",
+                        }}
+                    >
+                        {/* Animated gradient border */}
+                        <div
+                            style={{
+                                position: "absolute",
+                                inset: "-4px",
+                                borderRadius: "28px",
+                                background: "linear-gradient(45deg, var(--accent), var(--accent-dark), var(--accent))",
+                                backgroundSize: "200% 200%",
+                                animation: "gradient-border 3s ease infinite",
+                                padding: "4px",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    borderRadius: "24px",
+                                    background: "var(--bg)",
+                                    padding: "8px",
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        borderRadius: "20px",
+                                        overflow: "hidden",
+                                        border: "3px solid rgba(194, 164, 255, 0.2)",
+                                        boxShadow: "0 0 40px rgba(194, 164, 255, 0.3)",
+                                    }}
+                                >
+                                    <img
+                                        src="/profile.jpeg"
+                                        alt="Renesh Naidu Para"
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "cover",
+                                            objectPosition: "center 30%",
+                                        }}
+                                        onError={(e) => {
+                                            const target = e.target as HTMLImageElement;
+                                            target.style.display = "none";
+                                            const parent = target.parentElement;
+                                            if (parent) {
+                                                parent.style.background = "linear-gradient(135deg, rgba(194, 164, 255, 0.2), rgba(168, 124, 255, 0.3))";
+                                                parent.style.display = "flex";
+                                                parent.style.alignItems = "center";
+                                                parent.style.justifyContent = "center";
+                                                parent.innerHTML = '<span style="font-size: 64px; font-weight: 800; color: var(--accent);">RN</span>';
+                                            }
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        {/* Glow effect */}
+                        <div
+                            style={{
+                                position: "absolute",
+                                inset: "-20px",
+                                borderRadius: "28px",
+                                background: "radial-gradient(circle, rgba(194, 164, 255, 0.2) 0%, transparent 70%)",
+                                animation: "pulse-glow 3s ease-in-out infinite",
+                                pointerEvents: "none",
+                                zIndex: -1,
+                            }}
+                        />
+                    </div>
+                </div>
+
                 {/* Small greeting */}
                 <p
                     style={{
@@ -129,18 +232,22 @@ const Hero = () => {
                     Hello! I&apos;m
                 </p>
 
-                {/* Large Name */}
+                {/* Large Name with Gradient */}
                 <h1
                     style={{
                         fontSize: "clamp(56px, 10vw, 120px)",
                         fontWeight: 800,
                         lineHeight: 1,
                         letterSpacing: "-2px",
-                        color: "var(--text)",
+                        background: "linear-gradient(135deg, var(--text) 0%, var(--accent) 100%)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
                         marginBottom: "8px",
                         opacity: 0,
                         animation: "fadeInUp 0.7s ease 0.4s forwards",
                         textTransform: "uppercase",
+                        textShadow: "0 0 80px rgba(194, 164, 255, 0.5)",
                     }}
                 >
                     RENESH
@@ -151,7 +258,10 @@ const Hero = () => {
                         fontWeight: 800,
                         lineHeight: 1,
                         letterSpacing: "-2px",
-                        color: "var(--text)",
+                        background: "linear-gradient(135deg, var(--accent) 0%, var(--text) 100%)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
                         marginBottom: "40px",
                         opacity: 0,
                         animation: "fadeInUp 0.7s ease 0.5s forwards",
@@ -306,6 +416,21 @@ const Hero = () => {
                 @keyframes pulse-glow {
                     0%, 100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
                     50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+                }
+                
+                @keyframes mesh-move {
+                    0%, 100% {
+                        transform: translate(0, 0) scale(1);
+                        opacity: 1;
+                    }
+                    33% {
+                        transform: translate(30px, -30px) scale(1.1);
+                        opacity: 0.8;
+                    }
+                    66% {
+                        transform: translate(-20px, 20px) scale(0.9);
+                        opacity: 0.9;
+                    }
                 }
             `}</style>
         </section>

@@ -1,44 +1,60 @@
 import React from "react";
+import {
+    SiCplusplus,
+    SiC,
+    SiPython,
+    SiLinux,
+    SiKubernetes,
+    SiDocker,
+    SiHelm,
+    SiJenkins,
+    SiElasticsearch,
+    SiPrometheus,
+    SiGit,
+    SiGnubash,
+    SiRedhatopenshift
+} from "react-icons/si";
+import { FaNetworkWired, FaServer, FaBug, FaPlug, FaCog } from "react-icons/fa";
 
 const techGroups = [
     {
         category: "Languages",
         items: [
-            { name: "C", icon: "C" },
-            { name: "C++", icon: "C++" },
-            { name: "Python", icon: "Py" },
-            { name: "Assembly", icon: "ASM" },
-            { name: "Bash", icon: "SH" },
+            { name: "C", icon: SiC, color: "#A8B9CC" },
+            { name: "C++", icon: SiCplusplus, color: "#00599C" },
+            { name: "Python", icon: SiPython, color: "#3776AB" },
+            { name: "Assembly", icon: FaCog, color: "#6E4C13" },
+            { name: "Bash", icon: SiGnubash, color: "#4EAA25" },
         ],
     },
     {
         category: "Systems",
         items: [
-            { name: "Linux", icon: "🐧" },
-            { name: "POSIX", icon: "⚙" },
-            { name: "TCP/IP", icon: "🌐" },
-            { name: "Sockets", icon: "🔌" },
-            { name: "GDB", icon: "🐛" },
+            { name: "Linux", icon: SiLinux, color: "#FCC624" },
+            { name: "POSIX", icon: FaServer, color: "#8B8B8B" },
+            { name: "TCP/IP", icon: FaNetworkWired, color: "#0078D7" },
+            { name: "Sockets", icon: FaPlug, color: "#FF6B6B" },
+            { name: "GDB", icon: FaBug, color: "#DA4453" },
         ],
     },
     {
         category: "Cloud & DevOps",
         items: [
-            { name: "Kubernetes", icon: "K8s" },
-            { name: "OpenShift", icon: "OS" },
-            { name: "Docker", icon: "🐋" },
-            { name: "Helm", icon: "⎈" },
-            { name: "Jenkins", icon: "JK" },
+            { name: "Kubernetes", icon: SiKubernetes, color: "#326CE5" },
+            { name: "OpenShift", icon: SiRedhatopenshift, color: "#EE0000" },
+            { name: "Docker", icon: SiDocker, color: "#2496ED" },
+            { name: "Helm", icon: SiHelm, color: "#0F1689" },
+            { name: "Jenkins", icon: SiJenkins, color: "#D24939" },
         ],
     },
     {
         category: "Observability",
         items: [
-            { name: "Elasticsearch", icon: "ES" },
-            { name: "Fluentd", icon: "FD" },
-            { name: "Kibana", icon: "KB" },
-            { name: "Filebeat", icon: "FB" },
-            { name: "Prometheus", icon: "PRM" },
+            { name: "Elasticsearch", icon: SiElasticsearch, color: "#005571" },
+            { name: "Fluentd", icon: FaServer, color: "#0E83C8" },
+            { name: "Kibana", icon: SiElasticsearch, color: "#005571" },
+            { name: "Filebeat", icon: FaServer, color: "#00BFB3" },
+            { name: "Prometheus", icon: SiPrometheus, color: "#E6522C" },
         ],
     },
 ];
@@ -134,25 +150,35 @@ const Skills = () => {
                                         onMouseEnter={(e) => {
                                             e.currentTarget.style.background = "rgba(194, 164, 255, 0.1)";
                                             e.currentTarget.style.borderColor = "rgba(194, 164, 255, 0.3)";
-                                            e.currentTarget.style.transform = "translateY(-4px)";
-                                            e.currentTarget.style.boxShadow = "0 8px 20px rgba(194, 164, 255, 0.1)";
+                                            e.currentTarget.style.transform = "translateY(-8px) scale(1.05)";
+                                            e.currentTarget.style.boxShadow = "0 12px 24px rgba(194, 164, 255, 0.2)";
+                                            const icon = e.currentTarget.querySelector('span:first-child') as HTMLElement;
+                                            if (icon) {
+                                                icon.style.transform = "scale(1.2) rotate(5deg)";
+                                            }
                                         }}
                                         onMouseLeave={(e) => {
                                             e.currentTarget.style.background = "rgba(194, 164, 255, 0.03)";
                                             e.currentTarget.style.borderColor = "var(--border)";
-                                            e.currentTarget.style.transform = "translateY(0)";
+                                            e.currentTarget.style.transform = "translateY(0) scale(1)";
                                             e.currentTarget.style.boxShadow = "none";
+                                            const icon = e.currentTarget.querySelector('span:first-child') as HTMLElement;
+                                            if (icon) {
+                                                icon.style.transform = "scale(1) rotate(0deg)";
+                                            }
                                         }}
                                     >
                                         <span
                                             style={{
-                                                fontSize: "18px",
-                                                fontWeight: 700,
-                                                color: "var(--text)",
-                                                letterSpacing: "-0.5px",
+                                                fontSize: "32px",
+                                                color: item.color,
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                transition: "all 0.3s ease",
                                             }}
                                         >
-                                            {item.icon}
+                                            <item.icon />
                                         </span>
                                         <span
                                             style={{

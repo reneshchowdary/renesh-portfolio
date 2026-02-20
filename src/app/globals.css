@@ -196,3 +196,90 @@ a:hover {
     display: none !important;
   }
 }
+
+/* Project icon hover animation */
+.project-icon {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Animated gradient border effect */
+@keyframes gradient-border {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-border {
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark), var(--accent));
+  background-size: 200% 200%;
+  animation: gradient-border 3s ease infinite;
+}
+
+/* Glow pulse effect for icons */
+@keyframes icon-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(194, 164, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(194, 164, 255, 0.4);
+  }
+}
+
+.icon-glow {
+  animation: icon-glow 2s ease-in-out infinite;
+}
+
+/* Mesh gradient animation for Hero section */
+@keyframes mesh-move {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.mesh-gradient {
+  animation: mesh-move 20s ease-in-out infinite;
+}
+
+/* Shimmer loading effect */
+@keyframes shimmer-load {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer-effect {
+  background: linear-gradient(90deg, transparent, rgba(194, 164, 255, 0.1), transparent);
+  background-size: 1000px 100%;
+  animation: shimmer-load 2s infinite;
+}
+
+/* Scale up animation */
+@keyframes scale-up {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-up {
+  animation: scale-up 0.5s ease-out forwards;
+}

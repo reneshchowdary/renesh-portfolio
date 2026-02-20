@@ -158,7 +158,7 @@ const Contact = () => {
                 >
                     {[
                         { label: "LinkedIn", href: "https://linkedin.com/in/reneshnaidu" },
-                        { label: "GitHub", href: "https://github.com/reneshnaidu" },
+                        { label: "GitHub", href: "https://github.com/reneshchowdary" },
                         { label: "Email", href: "mailto:Reneshnaidu.para@gmail.com" },
                     ].map((link) => (
                         <a

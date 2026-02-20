@@ -2,6 +2,15 @@
 
 import React, { useState } from "react";
 import ProjectModal from "./ProjectModal";
+import {
+    SiKubernetes,
+    SiElasticsearch,
+    SiCplusplus,
+    SiLinux,
+    SiSocketdotio,
+    SiSqlite
+} from "react-icons/si";
+import { FaServer, FaCar, FaFingerprint } from "react-icons/fa";
 
 const projects = [
     {
@@ -9,6 +18,8 @@ const projects = [
         title: "CICS TX Observability Suite",
         category: "Cloud Infrastructure",
         tools: "Kubernetes, OpenShift, Helm, Fluentd, Elasticsearch, C++",
+        icon: SiKubernetes,
+        iconColor: "#326CE5",
         description:
             "Architected a complete observability pipeline using the EFK stack on OpenShift. Deployed via Helm charts and Operators, reducing incident resolution time by 40%.",
         fullDescription:
@@ -28,6 +39,8 @@ const projects = [
         title: "Operations Agent Collector",
         category: "System Engineering",
         tools: "C++17, Embedded Systems, OBM, Performance Tuning, STL",
+        icon: SiCplusplus,
+        iconColor: "#00599C",
         description:
             "High-performance embedded data collector in C/C++ aggregating system metrics with minimal resource footprint, integrated with OBM for real-time dashboarding.",
         fullDescription:
@@ -47,6 +60,8 @@ const projects = [
         title: "Automotive Camera Drivers",
         category: "Embedded / Automotive",
         tools: "C, Linux Kernel, I2C, AR0820, MAX9295A, MIPI CSI",
+        icon: FaCar,
+        iconColor: "#FF6B6B",
         description:
             "Device driver development for automotive camera modules in autonomous driving systems. Developed drivers for surround recognition and driver monitoring.",
         fullDescription:
@@ -66,6 +81,8 @@ const projects = [
         title: "Concurrent HTTPS Scheduler",
         category: "Backend Core",
         tools: "C++, Socket Programming, Multithreading, FIFO, Algorithms",
+        icon: FaServer,
+        iconColor: "#4ECDC4",
         description:
             "Multi-threaded web server implementing advanced scheduling algorithms to optimize request throughput and solve producer-consumer bottlenecks.",
         fullDescription:
@@ -85,6 +102,8 @@ const projects = [
         title: "Biometric Access Controller",
         category: "Embedded Linux",
         tools: "C, TCP/IP, SQLite, Embedded Linux, Dot Matrix Display",
+        icon: FaFingerprint,
+        iconColor: "#95E1D3",
         description:
             "Embedded Linux firmware for biometric access control systems with secure TCP/IP protocols and optimized event storage for 500K+ records.",
         fullDescription:
@@ -152,22 +171,38 @@ const SelectedWork = () => {
                             key={idx}
                             style={{
                                 padding: "36px 32px",
-                                background: "var(--bg)",
+                                background: "linear-gradient(135deg, rgba(194, 164, 255, 0.03) 0%, rgba(168, 124, 255, 0.05) 100%)",
                                 position: "relative",
-                                transition: "all 0.3s ease",
+                                transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
                                 cursor: "pointer",
+                                borderRadius: "8px",
+                                overflow: "hidden",
                             }}
                             onClick={() => setSelectedProject(project)}
                             onMouseEnter={(e) => {
-                                e.currentTarget.style.background = "rgba(194, 164, 255, 0.05)";
-                                e.currentTarget.style.transform = "translateY(-4px)";
+                                e.currentTarget.style.background = "linear-gradient(135deg, rgba(194, 164, 255, 0.1) 0%, rgba(168, 124, 255, 0.15) 100%)";
+                                e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
+                                e.currentTarget.style.boxShadow = "0 20px 40px rgba(194, 164, 255, 0.2)";
                             }}
                             onMouseLeave={(e) => {
-                                e.currentTarget.style.background = "var(--bg)";
-                                e.currentTarget.style.transform = "translateY(0)";
+                                e.currentTarget.style.background = "linear-gradient(135deg, rgba(194, 164, 255, 0.03) 0%, rgba(168, 124, 255, 0.05) 100%)";
+                                e.currentTarget.style.transform = "translateY(0) scale(1)";
+                                e.currentTarget.style.boxShadow = "none";
                             }}
                         >
-                            {/* Number */}
+                            {/* Gradient overlay on hover */}
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    height: "4px",
+                                    background: `linear-gradient(90deg, ${project.color}, var(--accent))`,
+                                    opacity: 0.6,
+                                }}
+                            />
+                            {/* Number and Icon */}
                             <div
                                 style={{
                                     display: "flex",
@@ -176,16 +211,39 @@ const SelectedWork = () => {
                                     marginBottom: "24px",
                                 }}
                             >
-                                <span
-                                    style={{
-                                        fontSize: "42px",
-                                        fontWeight: 800,
-                                        color: "rgba(194, 164, 255, 0.2)",
-                                        lineHeight: 1,
-                                    }}
-                                >
-                                    {project.num}
-                                </span>
+                                <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                                    <span
+                                        style={{
+                                            fontSize: "42px",
+                                            fontWeight: 800,
+                                            color: "rgba(194, 164, 255, 0.2)",
+                                            lineHeight: 1,
+                                        }}
+                                    >
+                                        {project.num}
+                                    </span>
+                                    <div
+                                        style={{
+                                            width: "48px",
+                                            height: "48px",
+                                            borderRadius: "12px",
+                                            background: `linear-gradient(135deg, ${project.iconColor}15, ${project.iconColor}25)`,
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            border: `1px solid ${project.iconColor}30`,
+                                            transition: "all 0.3s ease",
+                                        }}
+                                        className="project-icon"
+                                    >
+                                        <project.icon
+                                            style={{
+                                                fontSize: "24px",
+                                                color: project.iconColor,
+                                            }}
+                                        />
+                                    </div>
+                                </div>
                                 <span
                                     style={{
                                         fontSize: "11px",

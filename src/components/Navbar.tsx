@@ -67,7 +67,7 @@ const Navbar = () => {
                 </a>
 
                 {/* Right Nav Links */}
-                <nav style={{ display: "flex", alignItems: "center", gap: "40px" }}>
+                <nav style={{ display: "flex", alignItems: "center", gap: "32px" }}>
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
@@ -85,6 +85,47 @@ const Navbar = () => {
                             {link.name}
                         </Link>
                     ))}
+                    
+                    {/* Resume Button in Navbar */}
+                    <a
+                        href="/Renesh_Naidu_Para_Resume.pdf"
+                        download="Renesh_Naidu_Para_Resume.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                            padding: "10px 24px",
+                            borderRadius: "6px",
+                            background: "var(--accent)",
+                            border: "1px solid var(--accent)",
+                            color: "#0b080c",
+                            fontSize: "13px",
+                            fontWeight: 700,
+                            letterSpacing: "1px",
+                            transition: "all 0.3s ease",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                            textTransform: "uppercase",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "var(--accent-dark)";
+                            e.currentTarget.style.transform = "translateY(-2px)";
+                            e.currentTarget.style.boxShadow = "0 8px 20px rgba(194, 164, 255, 0.4)";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "var(--accent)";
+                            e.currentTarget.style.transform = "translateY(0)";
+                            e.currentTarget.style.boxShadow = "none";
+                        }}
+                        className="nav-resume-btn"
+                    >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        Resume
+                    </a>
                 </nav>
             </header>
 
@@ -103,7 +144,7 @@ const Navbar = () => {
             >
                 {/* GitHub */}
                 <a
-                    href="https://github.com/reneshnaidu"
+                    href="https://github.com/reneshchowdary"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: "var(--text-muted)", transition: "color 0.2s" }}
@@ -161,45 +202,28 @@ const Navbar = () => {
                 <div style={{ width: "1px", height: "60px", background: "var(--border)" }} />
             </div>
 
-            {/* Bottom right - Resume */}
-            <a
-                href="/Renesh_Naidu_Para_Resume.pdf"
-                download="Renesh_Naidu_Para_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                    position: "fixed",
-                    right: "24px",
-                    bottom: "40px",
-                    zIndex: 100,
-                    fontSize: "11px",
-                    fontWeight: 600,
-                    letterSpacing: "2px",
-                    color: "var(--text-muted)",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    writingMode: "vertical-rl",
-                    textOrientation: "mixed",
-                    transform: "rotate(180deg)",
-                    transition: "color 0.2s",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-            >
-                RESUME
-                <span style={{ fontSize: "16px", transform: "rotate(180deg)" }}>⊞</span>
-            </a>
-
             <style>{`
                 @media (min-width: 768px) {
                     .nav-email {
                         display: block !important;
                     }
                 }
+                @media (max-width: 900px) {
+                    .nav-resume-btn {
+                        padding: 8px 16px !important;
+                        font-size: 12px !important;
+                    }
+                    .nav-resume-btn svg {
+                        width: 14px !important;
+                        height: 14px !important;
+                    }
+                }
                 @media (max-width: 600px) {
                     .social-sidebar { display: none; }
-                    .resume-btn { display: none; }
+                    .nav-resume-btn {
+                        padding: 8px 12px !important;
+                        font-size: 11px !important;
+                    }
                 }
             `}</style>
         </>
